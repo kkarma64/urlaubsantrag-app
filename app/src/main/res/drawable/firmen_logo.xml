@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="360dp"
+    android:viewportWidth="360"
+    android:viewportHeight="360">
+
+    <!-- Hintergrund -->
+    <path
+        android:fillColor="#1D1D1B"
+        android:pathData="M0,0 H360 V360 H0 Z" />
+
+    <!-- Gelbes Gebäude (alle Teilformen in einem Pfad) -->
+    <path
+        android:fillColor="#FFED00"
+        android:pathData="
+            M32.5,76.5 L180.5,30 L328,76.5 L328,87 L180.5,40 L32.5,87 Z
+            M56,87 L180.5,48 L305,87 Z
+            M32.5,91.5 h295.5 v10 h-295.5 Z
+            M52.5,112 h256 v10.5 h-256 Z
+            M74.5,139.5 h44.5 v122.5 h-44.5 Z
+            M133.5,139.5 H176 L133.5,189 Z
+            M133.5,204.5 H158 C166,204.5 171.5,212 171.5,221 V262 H133.5 Z
+            M187,139.5 h44 v122.5 h-44 Z
+            M243.5,139.5 H287 V183 Z
+            M236.5,196 L272.5,176 V216 Z
+            M287,211 V262 H235 Z
+            M52.5,277 h256 v10.5 h-256 Z
+            M32.5,298 h295.5 v10.5 h-295.5 Z
+            M32.5,319 h295.5 v10.5 h-295.5 Z" />
+</vector>

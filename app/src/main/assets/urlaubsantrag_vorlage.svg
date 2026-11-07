@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 842 595"
+   width="100%"
+   height="100%"
+   version="1.1"
+   id="svg59"
+   sodipodi:docname="urlaubsantrag_vorlage.svg"
+   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs59" />
+  <sodipodi:namedview
+     id="namedview59"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="2.0420168"
+     inkscape:cx="421.15226"
+     inkscape:cy="297.5"
+     inkscape:window-width="2560"
+     inkscape:window-height="1417"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg59" />
+  <style
+     id="style1">
+    .title { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; letter-spacing: 6px; fill: #000; }
+    .company-name { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #000; }
+    .company-sub { font-family: Arial, sans-serif; font-size: 11px; fill: #000; }
+    .label { font-family: Arial, sans-serif; font-size: 11px; fill: #000; }
+    .label-small { font-family: Arial, sans-serif; font-size: 9px; fill: #000; }
+    .field-value { font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #000; }
+    .line { stroke: #000; stroke-width: 0.8; }
+    .box { fill: none; stroke: #000; stroke-width: 1; }
+  </style>
+  <!-- Hintergrund -->
+  <rect
+     width="842"
+     height="595"
+     fill="#FFFFFF"
+     id="rect1" />
+  <!-- KOPFBEREICH -->
+  <text
+     x="50"
+     y="52"
+     class="company-name"
+     id="text1">Mustermann Baugesellschaft mbH</text>
+  <text
+     x="50"
+     y="70"
+     class="company-sub"
+     id="text2">Hochbau und konstruktiver Ingenieurbau</text>
+  <text
+     x="50"
+     y="83"
+     class="company-sub"
+     id="text3">Musterstrasse 17, <tspan
+   font-weight="bold"
+   id="tspan2">12345 Musterstadt</tspan></text>
+  <text
+     x="50"
+     y="96"
+     class="company-sub"
+     id="text4">Fernruf 01234-567890</text>
+  <!-- TITEL -->
+  <text
+     x="350"
+     y="78"
+     class="title"
+     id="text5">URLAUBSANTRAG</text>
+  <!-- FIRMENLOGO (KE EMBLEM) -->
+  <g
+     transform="translate(730, 40) scale(0.18)"
+     id="g14">
+    <rect
+       width="360"
+       height="360"
+       fill="#1D1D1B"
+       id="rect5" />
+    <path
+       d="M32.5 76.5 L180.5 30 L328 76.5 L328 87 L180.5 40 L32.5 87 Z"
+       fill="#FFED00"
+       id="path5" />
+    <path
+       d="M56 87 L180.5 48 L305 87 Z"
+       fill="#FFED00"
+       id="path6" />
+    <rect
+       x="32.5"
+       y="91.5"
+       width="295.5"
+       height="10"
+       fill="#FFED00"
+       id="rect6" />
+    <rect
+       x="52.5"
+       y="112"
+       width="256"
+       height="10.5"
+       fill="#FFED00"
+       id="rect7" />
+    <rect
+       x="74.5"
+       y="139.5"
+       width="44.5"
+       height="122.5"
+       fill="#FFED00"
+       id="rect8" />
+    <path
+       d="M133.5 139.5 H176 L133.5 189 Z"
+       fill="#FFED00"
+       id="path8" />
+    <path
+       d="M133.5 204.5 H158 C166 204.5 171.5 212 171.5 221 V262 H133.5 Z"
+       fill="#FFED00"
+       id="path9" />
+    <rect
+       x="187"
+       y="139.5"
+       width="44"
+       height="122.5"
+       fill="#FFED00"
+       id="rect9" />
+    <path
+       d="M243.5 139.5 H287 V183 Z"
+       fill="#FFED00"
+       id="path10" />
+    <path
+       d="M236.5 196 L272.5 176 V216 Z"
+       fill="#FFED00"
+       id="path11" />
+    <path
+       d="M287 211 V262 H235 Z"
+       fill="#FFED00"
+       id="path12" />
+    <rect
+       x="52.5"
+       y="277"
+       width="256"
+       height="10.5"
+       fill="#FFED00"
+       id="rect12" />
+    <rect
+       x="32.5"
+       y="298"
+       width="295.5"
+       height="10.5"
+       fill="#FFED00"
+       id="rect13" />
+    <rect
+       x="32.5"
+       y="319"
+       width="295.5"
+       height="10.5"
+       fill="#FFED00"
+       id="rect14" />
+  </g>
+  <!-- STAMMDATEN - ZEILE 1 -->
+  <!-- Name, Vorname -->
+  <text
+     x="50"
+     y="170"
+     class="label"
+     id="text14">Name, Vorname:</text>
+  <line
+     x1="165"
+     y1="173"
+     x2="330"
+     y2="173"
+     class="line"
+     id="line15" />
+  <!-- Pers.Nr. -->
+  <text
+     x="333"
+     y="170"
+     class="label"
+     id="text16">Pers.Nr.:</text>
+  <line
+     x1="380"
+     y1="173"
+     x2="435"
+     y2="173"
+     class="line"
+     id="line17" />
+  <!-- Datum -->
+  <line
+     x1="450"
+     y1="173"
+     x2="545"
+     y2="173"
+     class="line"
+     id="line18" />
+  <text
+     x="450"
+     y="185"
+     class="label-small"
+     id="text19">(Datum)</text>
+  <!-- Unterschrift Kopf -->
+  <line
+     x1="560"
+     y1="173"
+     x2="795"
+     y2="173"
+     class="line"
+     id="line19" />
+  <text
+     x="560"
+     y="185"
+     class="label-small"
+     id="text20">(Unterschrift)</text>
+  <!-- STAMMDATEN - ZEILE 2 -->
+  <!-- Baustelle -->
+  <text
+     x="50"
+     y="212"
+     class="label"
+     id="text21">Baustelle:</text>
+  <line
+     x1="105"
+     y1="215"
+     x2="330"
+     y2="215"
+     class="line"
+     id="line22" />
+  <!-- Kst.-St. -->
+  <text
+     x="333"
+     y="212"
+     class="label"
+     id="text23">Kst.-St.:</text>
+  <line
+     x1="380"
+     y1="215"
+     x2="445"
+     y2="215"
+     class="line"
+     id="line24" />
+  <!-- GENEHMIGUNGSERKL�RUNGEN (RECHTS) -->
+  <text
+     x="498"
+     y="230"
+     class="label-small"
+     id="text25">befürwortet</text>
+  <text
+     x="498"
+     y="248"
+     class="label"
+     id="text26">Polier</text>
+  <text
+     x="720"
+     y="230"
+     class="label-small"
+     id="text27">genehmigt</text>
+  <text
+     x="720"
+     y="248"
+     class="label"
+     id="text28">Abteilungsleiter</text>
+  <text
+     x="610"
+     y="248"
+     class="label"
+     id="text29">Bauleiter</text>
+  <!-- TARIFURLAUB ZEILE 1 (MIT WERTEN) -->
+  <rect
+     x="50"
+     y="278"
+     width="20"
+     height="20"
+     class="box"
+     id="rect29" />
+  <text
+     x="75"
+     y="292"
+     class="label"
+     id="text31">Tarifurlaub vom</text>
+  <line
+     x1="162"
+     y1="295"
+     x2="228"
+     y2="295"
+     class="line"
+     id="line31" />
+  <text
+     x="233"
+     y="292"
+     class="label"
+     id="text33">bis</text>
+  <line
+     x1="248"
+     y1="295"
+     x2="314"
+     y2="295"
+     class="line"
+     id="line33" />
+  <text
+     x="320"
+     y="292"
+     class="label"
+     id="text35">=</text>
+  <line
+     x1="330"
+     y1="295"
+     x2="365"
+     y2="295"
+     class="line"
+     id="line35" />
+  <text
+     x="370"
+     y="292"
+     class="label"
+     id="text37">Tage</text>
+  <line
+     x1="498"
+     y1="295"
+     x2="595"
+     y2="295"
+     class="line"
+     id="line37" />
+  <line
+     x1="608"
+     y1="295"
+     x2="705"
+     y2="295"
+     class="line"
+     id="line38" />
+  <line
+     x1="718"
+     y1="295"
+     x2="795"
+     y2="295"
+     class="line"
+     id="line39" />
+  <!-- TARIFURLAUB ZEILE 2 -->
+  <rect
+     x="50"
+     y="328"
+     width="20"
+     height="20"
+     class="box"
+     id="rect39" />
+  <text
+     x="75"
+     y="342"
+     class="label"
+     id="text39">Tarifurlaub vom</text>
+  <line
+     x1="162"
+     y1="345"
+     x2="228"
+     y2="345"
+     class="line"
+     id="line40" />
+  <text
+     x="233"
+     y="342"
+     class="label"
+     id="text40">bis</text>
+  <line
+     x1="248"
+     y1="345"
+     x2="314"
+     y2="345"
+     class="line"
+     id="line41" />
+  <text
+     x="320"
+     y="342"
+     class="label"
+     id="text41">=</text>
+  <line
+     x1="330"
+     y1="345"
+     x2="365"
+     y2="345"
+     class="line"
+     id="line42" />
+  <text
+     x="370"
+     y="342"
+     class="label"
+     id="text42">Tage</text>
+  <line
+     x1="498"
+     y1="345"
+     x2="595"
+     y2="345"
+     class="line"
+     id="line43" />
+  <line
+     x1="608"
+     y1="345"
+     x2="705"
+     y2="345"
+     class="line"
+     id="line44" />
+  <line
+     x1="718"
+     y1="345"
+     x2="795"
+     y2="345"
+     class="line"
+     id="line45" />
+  <!-- TARIFURLAUB ZEILE 3 -->
+  <rect
+     x="50"
+     y="378"
+     width="20"
+     height="20"
+     class="box"
+     id="rect45" />
+  <text
+     x="75"
+     y="392"
+     class="label"
+     id="text45">Tarifurlaub vom</text>
+  <line
+     x1="162"
+     y1="395"
+     x2="228"
+     y2="395"
+     class="line"
+     id="line46" />
+  <text
+     x="233"
+     y="392"
+     class="label"
+     id="text46">bis</text>
+  <line
+     x1="248"
+     y1="395"
+     x2="314"
+     y2="395"
+     class="line"
+     id="line47" />
+  <text
+     x="320"
+     y="392"
+     class="label"
+     id="text47">=</text>
+  <line
+     x1="330"
+     y1="395"
+     x2="365"
+     y2="395"
+     class="line"
+     id="line48" />
+  <text
+     x="370"
+     y="392"
+     class="label"
+     id="text48">Tage</text>
+  <line
+     x1="498"
+     y1="395"
+     x2="595"
+     y2="395"
+     class="line"
+     id="line49" />
+  <line
+     x1="608"
+     y1="395"
+     x2="705"
+     y2="395"
+     class="line"
+     id="line50" />
+  <line
+     x1="718"
+     y1="395"
+     x2="795"
+     y2="395"
+     class="line"
+     id="line51" />
+  <!-- SONDERURLAUB ZEILE 1 -->
+  <rect
+     x="50"
+     y="448"
+     width="20"
+     height="20"
+     class="box"
+     id="rect51" />
+  <text
+     x="75"
+     y="462"
+     class="label"
+     id="text51">Sonderurlaub vom</text>
+  <line
+     x1="172"
+     y1="465"
+     x2="245"
+     y2="465"
+     class="line"
+     id="line52" />
+  <text
+     x="250"
+     y="462"
+     class="label"
+     id="text52">bis</text>
+  <line
+     x1="268"
+     y1="465"
+     x2="314"
+     y2="465"
+     class="line"
+     id="line53" />
+  <text
+     x="320"
+     y="462"
+     class="label"
+     id="text53">=</text>
+  <line
+     x1="330"
+     y1="465"
+     x2="365"
+     y2="465"
+     class="line"
+     id="line54" />
+  <text
+     x="370"
+     y="462"
+     class="label"
+     id="text54">Tage</text>
+  <line
+     x1="498"
+     y1="465"
+     x2="595"
+     y2="465"
+     class="line"
+     id="line55" />
+  <line
+     x1="608"
+     y1="465"
+     x2="705"
+     y2="465"
+     class="line"
+     id="line56" />
+  <line
+     x1="718"
+     y1="465"
+     x2="795"
+     y2="465"
+     class="line"
+     id="line57" />
+  <!-- SONDERURLAUB ZEILE 2 (GRUND) -->
+  <text
+     x="75"
+     y="502"
+     class="label"
+     id="text57">Grund:</text>
+  <line
+     x1="110"
+     y1="505"
+     x2="314"
+     y2="505"
+     class="line"
+     id="line58" />
+  <text
+     x="320"
+     y="502"
+     class="label"
+     id="text58">=</text>
+  <line
+     x1="330"
+     y1="505"
+     x2="365"
+     y2="505"
+     class="line"
+     id="line59" />
+  <text
+     x="370"
+     y="502"
+     class="label"
+     id="text59">Tage</text>
+</svg>

@@ -1,0 +1,93 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="842dp"
+    android:height="595dp"
+    android:viewportWidth="842"
+    android:viewportHeight="595">
+
+    <!-- Hintergrund -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M0,0h842v595H0z" />
+
+    <!-- KOPFBEREICH TEXTE -->
+    <!-- Mustermann Baugesellschaft mbH -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M50,40h280v15H50z" /> <!-- Platzhalter für Firmenname oder direkt über Android TextView realisierbar -->
+
+    <!-- FIRMENLOGO (KE EMBLEM gruppiert & skaliert) -->
+    <group android:translateX="730" android:translateY="40" android:scaleX="0.18" android:scaleY="0.18">
+        <path android:fillColor="#1D1D1B" android:pathData="M0,0h360v360H0z" />
+        <path android:fillColor="#FFED00" android:pathData="M32.5,76.5 L180.5,30 L328,76.5 L328,87 L180.5,40 L32.5,87 Z" />
+        <path android:fillColor="#FFED00" android:pathData="M56,87 L180.5,48 L305,87 Z" />
+        <path android:fillColor="#FFED00" android:pathData="M32.5,91.5h295.5v10h-295.5z" />
+        <path android:fillColor="#FFED00" android:pathData="M52.5,112h256v10.5h-256z" />
+        <path android:fillColor="#FFED00" android:pathData="M74.5,139.5h44.5v122.5h-44.5z" />
+        <path android:fillColor="#FFED00" android:pathData="M133.5,139.5H176L133.5,189Z" />
+        <path android:fillColor="#FFED00" android:pathData="M133.5,204.5H158C166,204.5 171.5,212 171.5,221V262H133.5Z" />
+        <path android:fillColor="#FFED00" android:pathData="M187,139.5h44v122.5h-44z" />
+        <path android:fillColor="#FFED00" android:pathData="M243.5,139.5H287V183Z" />
+        <path android:fillColor="#FFED00" android:pathData="M236.5,196L272.5,176V216Z" />
+        <path android:fillColor="#FFED00" android:pathData="M287,211V262H235Z" />
+        <path android:fillColor="#FFED00" android:pathData="M52.5,277h256v10.5h-256z" />
+        <path android:fillColor="#FFED00" android:pathData="M32.5,298h295.5v10.5h-295.5z" />
+        <path android:fillColor="#FFED00" android:pathData="M32.5,319h295.5v10.5h-295.5z" />
+    </group>
+
+    <!-- FORMULAR-LINIEN & SEPARATOREN -->
+    <!-- Zeile 1 Linien -->
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M165,173 H330" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M380,173 H435" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M450,173 H545" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M560,173 H795" />
+
+    <!-- Zeile 2 Linien -->
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M105,215 H330" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M380,215 H445" />
+
+    <!-- Checkbox 1 -->
+    <path android:strokeColor="#000000" android:strokeWidth="1" android:pathData="M50,278 h20 v20 h-20 z" />
+    <!-- Checkbox 2 -->
+    <path android:strokeColor="#000000" android:strokeWidth="1" android:pathData="M50,328 h20 v20 h-20 z" />
+    <!-- Checkbox 3 -->
+    <path android:strokeColor="#000000" android:strokeWidth="1" android:pathData="M50,378 h20 v20 h-20 z" />
+    <!-- Checkbox Sonderurlaub -->
+    <path android:strokeColor="#000000" android:strokeWidth="1" android:pathData="M50,448 h20 v20 h-20 z" />
+
+    <!-- Urlaub Zeile 1 Linien -->
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M162,295 H228" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M248,295 H314" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M330,295 H365" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M498,295 H595" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M608,295 H705" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M718,295 H795" />
+
+    <!-- Urlaub Zeile 2 Linien -->
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M162,345 H228" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M248,345 H314" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M330,345 H365" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M498,345 H595" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M608,345 H705" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M718,345 H795" />
+
+    <!-- Urlaub Zeile 3 Linien -->
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M162,395 H228" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M248,395 H314" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M330,395 H365" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M498,395 H595" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M608,395 H705" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M718,395 H795" />
+
+    <!-- Sonderurlaub Linien -->
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M172,465 H245" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M268,465 H314" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M330,465 H365" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M498,465 H595" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M608,465 H705" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M718,465 H795" />
+
+    <!-- Grund Linie -->
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M110,505 H314" />
+    <path android:strokeColor="#000000" android:strokeWidth="0.8" android:pathData="M330,505 H365" />
+
+</vector>

@@ -1,0 +1,906 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "f517fa51830e1b13e459dffac1ccf2f7",
+    "entities": [
+      {
+        "tableName": "profil",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `pnr` TEXT NOT NULL, `baustelle` TEXT NOT NULL, `bundesland` TEXT NOT NULL, `gewerk` TEXT NOT NULL, `kolonne` TEXT NOT NULL, `polier` TEXT NOT NULL, `bauleiter` TEXT NOT NULL, `polier_email` TEXT DEFAULT NULL, `bauleiter_email` TEXT DEFAULT NULL, `technischer_leiter_email` TEXT DEFAULT NULL, `lohnbuero_email` TEXT DEFAULT NULL, `bcc_email` TEXT DEFAULT NULL, `erstellt_am` INTEGER NOT NULL, `geaendert_am` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pnr",
+            "columnName": "pnr",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "baustelle",
+            "columnName": "baustelle",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bundesland",
+            "columnName": "bundesland",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gewerk",
+            "columnName": "gewerk",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kolonne",
+            "columnName": "kolonne",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "polier",
+            "columnName": "polier",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bauleiter",
+            "columnName": "bauleiter",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "polierEmail",
+            "columnName": "polier_email",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "bauleiterEmail",
+            "columnName": "bauleiter_email",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "technischerLeiterEmail",
+            "columnName": "technischer_leiter_email",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "lohnbueroEmail",
+            "columnName": "lohnbuero_email",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "bccEmail",
+            "columnName": "bcc_email",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "erstelltAm",
+            "columnName": "erstellt_am",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "geaendertAm",
+            "columnName": "geaendert_am",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "arbeitsmodell",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`profil_id` INTEGER NOT NULL, `sechs_tage_woche` INTEGER NOT NULL, `arbeitstage_maske` INTEGER NOT NULL DEFAULT 31, `wochen_start_iso` INTEGER NOT NULL DEFAULT 1, PRIMARY KEY(`profil_id`))",
+        "fields": [
+          {
+            "fieldPath": "profilId",
+            "columnName": "profil_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sechsTageWoche",
+            "columnName": "sechs_tage_woche",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "arbeitstageMaske",
+            "columnName": "arbeitstage_maske",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "31"
+          },
+          {
+            "fieldPath": "wochenStartIso",
+            "columnName": "wochen_start_iso",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "profil_id"
+          ]
+        }
+      },
+      {
+        "tableName": "antrag",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `antrags_nr` TEXT NOT NULL, `jahr` INTEGER NOT NULL, `name` TEXT NOT NULL, `pnr` TEXT NOT NULL, `baustelle` TEXT NOT NULL, `kostenstelle` TEXT DEFAULT NULL, `gewerk` TEXT NOT NULL, `kolonne` TEXT NOT NULL, `polier` TEXT NOT NULL, `bauleiter` TEXT NOT NULL, `bundesland` TEXT NOT NULL, `tarif_von` TEXT NOT NULL, `tarif_bis` TEXT NOT NULL, `tarif_tage` INTEGER NOT NULL, `ist_halber_tag` INTEGER NOT NULL DEFAULT 0, `tages_teil` TEXT DEFAULT NULL, `sonderurlaub` INTEGER NOT NULL DEFAULT 0, `sonderurlaub_von` TEXT DEFAULT NULL, `sonderurlaub_bis` TEXT DEFAULT NULL, `sonderurlaub_tage` INTEGER DEFAULT NULL, `sonderurlaub_grund` TEXT DEFAULT NULL, `rueckkehrdatum` TEXT NOT NULL, `status` TEXT NOT NULL, `ist_versendet` INTEGER NOT NULL DEFAULT 0, `mail_status` TEXT NOT NULL DEFAULT 'PENDING', `letzter_versand_versuch` INTEGER DEFAULT NULL, `unterschrift_uri` TEXT DEFAULT NULL, `unterschrift_art` TEXT DEFAULT NULL, `betreff` TEXT DEFAULT NULL, `dateiname` TEXT DEFAULT NULL, `erstellt_am` INTEGER NOT NULL, `geaendert_am` INTEGER NOT NULL, `eingereicht_am` INTEGER DEFAULT NULL, `genehmigt_am` INTEGER DEFAULT NULL, `storniert_am` INTEGER DEFAULT NULL, `storno_grund` TEXT DEFAULT NULL, `halbe_tage_json` TEXT DEFAULT NULL, `abwesenheitstext` TEXT DEFAULT NULL, `paragraph9_hinweis` TEXT DEFAULT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "antragsNr",
+            "columnName": "antrags_nr",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "jahr",
+            "columnName": "jahr",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pnr",
+            "columnName": "pnr",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "baustelle",
+            "columnName": "baustelle",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kostenstelle",
+            "columnName": "kostenstelle",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "gewerk",
+            "columnName": "gewerk",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kolonne",
+            "columnName": "kolonne",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "polier",
+            "columnName": "polier",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bauleiter",
+            "columnName": "bauleiter",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bundesland",
+            "columnName": "bundesland",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tarifVon",
+            "columnName": "tarif_von",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tarifBis",
+            "columnName": "tarif_bis",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tarifTage",
+            "columnName": "tarif_tage",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "istHalberTag",
+            "columnName": "ist_halber_tag",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "tagesTeil",
+            "columnName": "tages_teil",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "sonderurlaub",
+            "columnName": "sonderurlaub",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "sonderurlaubVon",
+            "columnName": "sonderurlaub_von",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "sonderurlaubBis",
+            "columnName": "sonderurlaub_bis",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "sonderurlaubTage",
+            "columnName": "sonderurlaub_tage",
+            "affinity": "INTEGER",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "sonderurlaubGrund",
+            "columnName": "sonderurlaub_grund",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "rueckkehrdatum",
+            "columnName": "rueckkehrdatum",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "istVersendet",
+            "columnName": "ist_versendet",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "mailStatus",
+            "columnName": "mail_status",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'PENDING'"
+          },
+          {
+            "fieldPath": "letzterVersandVersuch",
+            "columnName": "letzter_versand_versuch",
+            "affinity": "INTEGER",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "unterschriftUri",
+            "columnName": "unterschrift_uri",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "unterschriftArt",
+            "columnName": "unterschrift_art",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "betreff",
+            "columnName": "betreff",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "dateiname",
+            "columnName": "dateiname",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "erstelltAm",
+            "columnName": "erstellt_am",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "geaendertAm",
+            "columnName": "geaendert_am",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "eingereichtAm",
+            "columnName": "eingereicht_am",
+            "affinity": "INTEGER",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "genehmigtAm",
+            "columnName": "genehmigt_am",
+            "affinity": "INTEGER",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "storniertAm",
+            "columnName": "storniert_am",
+            "affinity": "INTEGER",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "stornoGrund",
+            "columnName": "storno_grund",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "halbeTageJson",
+            "columnName": "halbe_tage_json",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "abwesenheitstext",
+            "columnName": "abwesenheitstext",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "paragraph9Hinweis",
+            "columnName": "paragraph9_hinweis",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_antrag_status",
+            "unique": false,
+            "columnNames": [
+              "status"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_antrag_status` ON `${TABLE_NAME}` (`status`)"
+          },
+          {
+            "name": "index_antrag_jahr",
+            "unique": false,
+            "columnNames": [
+              "jahr"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_antrag_jahr` ON `${TABLE_NAME}` (`jahr`)"
+          },
+          {
+            "name": "index_antrag_antrags_nr",
+            "unique": true,
+            "columnNames": [
+              "antrags_nr"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_antrag_antrags_nr` ON `${TABLE_NAME}` (`antrags_nr`)"
+          }
+        ]
+      },
+      {
+        "tableName": "vertretung",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `antrag_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `pnr` TEXT DEFAULT NULL, `email` TEXT DEFAULT NULL, `sort_index` INTEGER NOT NULL DEFAULT 0, FOREIGN KEY(`antrag_id`) REFERENCES `antrag`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "antragId",
+            "columnName": "antrag_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pnr",
+            "columnName": "pnr",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "sortIndex",
+            "columnName": "sort_index",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_vertretung_antrag_id",
+            "unique": false,
+            "columnNames": [
+              "antrag_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_vertretung_antrag_id` ON `${TABLE_NAME}` (`antrag_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "antrag",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "antrag_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "anhang",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `antrag_id` INTEGER NOT NULL, `typ` TEXT NOT NULL, `dateiname` TEXT NOT NULL, `mime` TEXT DEFAULT NULL, `datei_uri` TEXT NOT NULL, `groesse_bytes` INTEGER NOT NULL DEFAULT 0, `erstellt_am` INTEGER NOT NULL, `art9_einwilligung` INTEGER DEFAULT NULL, FOREIGN KEY(`antrag_id`) REFERENCES `antrag`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "antragId",
+            "columnName": "antrag_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "typ",
+            "columnName": "typ",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateiname",
+            "columnName": "dateiname",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mime",
+            "columnName": "mime",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "dateiUri",
+            "columnName": "datei_uri",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "groesseBytes",
+            "columnName": "groesse_bytes",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "erstelltAm",
+            "columnName": "erstellt_am",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "art9Einwilligung",
+            "columnName": "art9_einwilligung",
+            "affinity": "INTEGER",
+            "defaultValue": "NULL"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_anhang_antrag_id",
+            "unique": false,
+            "columnNames": [
+              "antrag_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_anhang_antrag_id` ON `${TABLE_NAME}` (`antrag_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "antrag",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "antrag_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "status_protokoll",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `antrag_id` INTEGER NOT NULL, `status` TEXT NOT NULL, `zeitpunkt` INTEGER NOT NULL, `kommentar` TEXT DEFAULT NULL, `quelle` TEXT NOT NULL DEFAULT 'SYSTEM', FOREIGN KEY(`antrag_id`) REFERENCES `antrag`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "antragId",
+            "columnName": "antrag_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "zeitpunkt",
+            "columnName": "zeitpunkt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kommentar",
+            "columnName": "kommentar",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "quelle",
+            "columnName": "quelle",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'SYSTEM'"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_status_protokoll_antrag_id",
+            "unique": false,
+            "columnNames": [
+              "antrag_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_status_protokoll_antrag_id` ON `${TABLE_NAME}` (`antrag_id`)"
+          },
+          {
+            "name": "index_status_protokoll_zeitpunkt",
+            "unique": false,
+            "columnNames": [
+              "zeitpunkt"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_status_protokoll_zeitpunkt` ON `${TABLE_NAME}` (`zeitpunkt`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "antrag",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "antrag_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "empfaenger",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `rolle` TEXT NOT NULL, `typ` TEXT NOT NULL, `email` TEXT NOT NULL, `anzeigename` TEXT DEFAULT NULL, `aktiv` INTEGER NOT NULL DEFAULT 1, `sort_index` INTEGER NOT NULL DEFAULT 0)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rolle",
+            "columnName": "rolle",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "typ",
+            "columnName": "typ",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "anzeigename",
+            "columnName": "anzeigename",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "aktiv",
+            "columnName": "aktiv",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          },
+          {
+            "fieldPath": "sortIndex",
+            "columnName": "sort_index",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_empfaenger_rolle_email",
+            "unique": true,
+            "columnNames": [
+              "rolle",
+              "email"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_empfaenger_rolle_email` ON `${TABLE_NAME}` (`rolle`, `email`)"
+          }
+        ]
+      },
+      {
+        "tableName": "ics_quelle",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `url` TEXT NOT NULL, `warnung_aktiv` INTEGER NOT NULL DEFAULT 1, `letzter_abruf` INTEGER DEFAULT NULL, `aktiv` INTEGER NOT NULL DEFAULT 1)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "warnungAktiv",
+            "columnName": "warnung_aktiv",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          },
+          {
+            "fieldPath": "letzterAbruf",
+            "columnName": "letzter_abruf",
+            "affinity": "INTEGER",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "aktiv",
+            "columnName": "aktiv",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "app_settings",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `default_bundesland` TEXT NOT NULL DEFAULT 'HE', `default_arbeitstage` INTEGER NOT NULL DEFAULT 5, `sprache` TEXT NOT NULL DEFAULT 'de', `onboarding_abgeschlossen` INTEGER NOT NULL DEFAULT 0, `einwilligung_unterschrift` INTEGER NOT NULL DEFAULT 0, `einwilligung_am` INTEGER DEFAULT NULL, `app_lock_aktiv` INTEGER NOT NULL DEFAULT 1, `biometrie_bevorzugt` INTEGER NOT NULL DEFAULT 1, `lohnbuero_mail_getestet` INTEGER NOT NULL DEFAULT 0, `letztes_backup_am` INTEGER DEFAULT NULL, `art9_einwilligung` INTEGER DEFAULT NULL, `art9_einwilligung_am` INTEGER DEFAULT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "defaultBundesland",
+            "columnName": "default_bundesland",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'HE'"
+          },
+          {
+            "fieldPath": "defaultArbeitstage",
+            "columnName": "default_arbeitstage",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "5"
+          },
+          {
+            "fieldPath": "sprache",
+            "columnName": "sprache",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'de'"
+          },
+          {
+            "fieldPath": "onboardingAbgeschlossen",
+            "columnName": "onboarding_abgeschlossen",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "einwilligungUnterschrift",
+            "columnName": "einwilligung_unterschrift",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "einwilligungAm",
+            "columnName": "einwilligung_am",
+            "affinity": "INTEGER",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "appLockAktiv",
+            "columnName": "app_lock_aktiv",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          },
+          {
+            "fieldPath": "biometrieBevorzugt",
+            "columnName": "biometrie_bevorzugt",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          },
+          {
+            "fieldPath": "lohnbueroMailGetestet",
+            "columnName": "lohnbuero_mail_getestet",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "letztesBackupAm",
+            "columnName": "letztes_backup_am",
+            "affinity": "INTEGER",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "art9Einwilligung",
+            "columnName": "art9_einwilligung",
+            "affinity": "INTEGER",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "art9EinwilligungAm",
+            "columnName": "art9_einwilligung_am",
+            "affinity": "INTEGER",
+            "defaultValue": "NULL"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f517fa51830e1b13e459dffac1ccf2f7')"
+    ]
+  }
+}
