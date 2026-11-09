@@ -227,8 +227,12 @@ class WizardViewModel(application: Application) : AndroidViewModel(application) 
                 val pdfFile = PdfGenerator.generatePdf(context, state, signatureFile)
                 _uiState.update { it.copy(pdfGeneriert = true) }
 
-                // E-Mail-Client Intent aufrufen
-                val sent = sendUrlaubMail(context, pdfFile, antragId)
+                val appPrefs = AppPreferencesRepository(context)
+                val empfaenger = appPrefs.empfaengerEmail.first() ?: "lohnbuero@nameunternehmen.de"
+                val securePrefs = de.bauhaupt.urlaubsschein.data.security.SecurePreferences(context)
+                val polierEmail = securePrefs.standardPolierEmail
+
+                val sent = sendUrlaubMailWithRecipients(context, pdfFile, antragId, empfaenger, polierEmail)
                 if (sent) {
                     markAsSent(antragId)
                 }
@@ -239,10 +243,40 @@ class WizardViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    private suspend fun sendUrlaubMail(context: android.content.Context, pdfFile: File, antragId: Long): Boolean {
+    fun submitAntragWithRecipients(
+        context: android.content.Context,
+        signatureFile: File?,
+        lohnbueroEmail: String,
+        polierEmail: String,
+        onSuccess: () -> Unit
+    ) {
+        viewModelScope.launch {
+            val state = _uiState.value
+            try {
+                val antragId = createDraftAntrag()
+                val pdfFile = PdfGenerator.generatePdf(context, state, signatureFile)
+                _uiState.update { it.copy(pdfGeneriert = true) }
+
+                val sent = sendUrlaubMailWithRecipients(context, pdfFile, antragId, lohnbueroEmail, polierEmail)
+                if (sent) {
+                    markAsSent(antragId)
+                }
+                onSuccess()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    suspend fun sendUrlaubMailWithRecipients(
+        context: android.content.Context,
+        pdfFile: File,
+        antragId: Long,
+        lohnbueroEmail: String,
+        polierEmail: String
+    ): Boolean {
         return try {
             val appPrefs = AppPreferencesRepository(context)
-            val empfaenger = appPrefs.empfaengerEmail.first() ?: ""
             val betreffFormat = appPrefs.betreffFormat.first()
 
             val antrag = repository.ladeAntragNachId(antragId)
@@ -261,10 +295,16 @@ class WizardViewModel(application: Application) : AndroidViewModel(application) 
                 pdfFile
             )
 
+            val recipients = listOf(lohnbueroEmail).filter { it.isNotBlank() }.toTypedArray()
+            val ccRecipients = listOf(polierEmail).filter { it.isNotBlank() }.toTypedArray()
+
             val intent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
                 type = "application/pdf"
-                if (empfaenger.isNotBlank()) {
-                    putExtra(android.content.Intent.EXTRA_EMAIL, arrayOf(empfaenger))
+                if (recipients.isNotEmpty()) {
+                    putExtra(android.content.Intent.EXTRA_EMAIL, recipients)
+                }
+                if (ccRecipients.isNotEmpty()) {
+                    putExtra(android.content.Intent.EXTRA_CC, ccRecipients)
                 }
                 putExtra(android.content.Intent.EXTRA_SUBJECT, betreff)
                 putExtra(android.content.Intent.EXTRA_TEXT, "Anbei mein Urlaubsantrag für den Zeitraum $zeitraumVal.")

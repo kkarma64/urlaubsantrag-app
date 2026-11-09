@@ -71,15 +71,6 @@ fun ProfileSettingsScreen(
     var empfaengerEmail by remember { mutableStateOf("") }
     var betreffFormat by remember { mutableStateOf("Urlaubsschein {Name} {Zeitraum}") }
     var dateinameFormat by remember { mutableStateOf("Urlaubsschein_{Name}_{Datum}.pdf") }
-    var lockTimeoutMs by remember { mutableStateOf(15000L) }
-    var timeoutDropdownExpanded by remember { mutableStateOf(false) }
-
-    val timeoutOptions = listOf(
-        0L to "0 Sekunden (Sofort)",
-        15000L to "15 Sekunden (Standard)",
-        60000L to "60 Sekunden",
-        300000L to "300 Sekunden (5 Minuten)"
-    )
 
     var snackbarMessage by remember { mutableStateOf<String?>(null) }
     var pendingImportUri by remember { mutableStateOf<Uri?>(null) }
@@ -109,7 +100,6 @@ fun ProfileSettingsScreen(
         empfaengerEmail = appPrefs.empfaengerEmail.first() ?: ""
         betreffFormat = appPrefs.betreffFormat.first()
         dateinameFormat = appPrefs.dateinameFormat.first()
-        lockTimeoutMs = appPrefs.lockTimeout.first()
     }
 
     var blDropdownExpanded by remember { mutableStateOf(false) }
@@ -211,64 +201,6 @@ fun ProfileSettingsScreen(
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
                 fontSize = 13.sp
             )
-
-            // --- SPERRBILDSCHIRM & TIMEOUT ---
-            Card(
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                shape = RoundedCornerShape(16.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Text("SPERRBILDSCHIRM & TIMEOUT", color = MaterialTheme.colorScheme.primary, fontSize = 14.sp, fontWeight = FontWeight.Bold)
-
-                    Text("Automatisches Sperren nach Inaktivität im Hintergrund:", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f), fontSize = 12.sp)
-
-                    Box {
-                        OutlinedButton(
-                            onClick = { timeoutDropdownExpanded = true },
-                            modifier = Modifier.fillMaxWidth().height(56.dp),
-                            shape = RoundedCornerShape(12.dp),
-                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    text = timeoutOptions.find { it.first == lockTimeoutMs }?.second ?: "15 Sekunden (Standard)",
-                                    color = MaterialTheme.colorScheme.onSurface,
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                                Text("▼", color = MaterialTheme.colorScheme.primary, fontSize = 12.sp)
-                            }
-                        }
-
-                        DropdownMenu(
-                            expanded = timeoutDropdownExpanded,
-                            onDismissRequest = { timeoutDropdownExpanded = false },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.surface)
-                        ) {
-                            timeoutOptions.forEach { (ms, label) ->
-                                DropdownMenuItem(
-                                    text = { Text(text = label, color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp) },
-                                    onClick = {
-                                        lockTimeoutMs = ms
-                                        timeoutDropdownExpanded = false
-                                    },
-                                    modifier = Modifier.background(MaterialTheme.colorScheme.surface)
-                                )
-                            }
-                        }
-                    }
-                }
-            }
 
             // --- APP-AKTUALISIERUNG ---
             Card(
@@ -834,12 +766,6 @@ fun ProfileSettingsScreen(
                     securePrefs.kostenstelle = kostenstelle
                     securePrefs.standardPolier = standardPolier
                     securePrefs.standardBundesland = standardBundesland.kuerzel
-                    scope.launch {
-                        appPrefs.setEmpfaengerEmail(empfaengerEmail)
-                        appPrefs.setBetreffFormat(betreffFormat)
-                        appPrefs.setDateinameFormat(dateinameFormat)
-                        appPrefs.setLockTimeout(lockTimeoutMs)
-                    }
                     savedMessage = true
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),

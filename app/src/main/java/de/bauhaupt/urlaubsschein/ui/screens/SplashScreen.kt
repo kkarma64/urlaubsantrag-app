@@ -10,7 +10,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -22,8 +21,7 @@ import de.bauhaupt.urlaubsschein.ui.components.GridBackground
 
 @Composable
 fun SplashScreen(
-    onStartClick: () -> Unit,
-    onHelpClick: () -> Unit
+    onStartClick: () -> Unit
 ) {
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
@@ -33,8 +31,7 @@ fun SplashScreen(
             Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .windowInsetsPadding(WindowInsets.safeDrawing)
-                    .padding(24.dp)
+                    .padding(horizontal = 24.dp)
                     .verticalScroll(rememberScrollState()),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(32.dp)
@@ -48,26 +45,26 @@ fun SplashScreen(
                     Image(
                         painter = painterResource(id = R.drawable.splash_image),
                         contentDescription = "Splash Logo",
-                        modifier = Modifier.size(200.dp)
+                        modifier = Modifier.size(180.dp)
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(
                         text = "Urlaubsschein Bau",
                         color = MaterialTheme.colorScheme.onBackground,
-                        fontSize = 26.sp,
+                        fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center
                     )
                     Text(
                         text = "Digitaler Urlaubsantrag",
                         color = MaterialTheme.colorScheme.primary,
-                        fontSize = 18.sp,
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center
                     )
                 }
 
-                // Rechte Spalte: Untertitel, Button & Hilfe
+                // Rechte Spalte: Untertitel & Button
                 Column(
                     modifier = Modifier.weight(1f),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -76,18 +73,18 @@ fun SplashScreen(
                     Text(
                         text = "Dein Urlaub. Einfach beantragt.",
                         color = MaterialTheme.colorScheme.onBackground,
-                        fontSize = 22.sp,
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center
                     )
                     Text(
                         text = "In nur 3 Schritten zum Urlaubsantrag",
                         color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
-                        fontSize = 14.sp,
+                        fontSize = 13.sp,
                         modifier = Modifier.padding(top = 8.dp)
                     )
 
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
 
                     Button(
                         onClick = onStartClick,
@@ -95,28 +92,22 @@ fun SplashScreen(
                         shape = RoundedCornerShape(30.dp),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(54.dp)
+                            .height(50.dp)
                     ) {
                         Text(
                             text = "Urlaub beantragen ➔",
                             color = MaterialTheme.colorScheme.onPrimary,
-                            fontSize = 18.sp,
+                            fontSize = 16.sp,
                             fontWeight = FontWeight.Bold
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    TextButton(onClick = onHelpClick) {
-                        Text("📖 Hilfe & Bedienungsanleitung", color = MaterialTheme.colorScheme.primary, fontSize = 14.sp)
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
                     Text(
                         text = "Schnell • Einfach • Digital",
                         color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f),
-                        fontSize = 13.sp
+                        fontSize = 12.sp
                     )
                 }
             }
@@ -124,8 +115,7 @@ fun SplashScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .windowInsetsPadding(WindowInsets.safeDrawing)
-                    .padding(24.dp)
+                    .padding(horizontal = 24.dp)
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
@@ -134,46 +124,46 @@ fun SplashScreen(
                 Text(
                     text = "Urlaubsschein Bau",
                     color = MaterialTheme.colorScheme.onBackground,
-                    fontSize = 32.sp,
+                    fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
                 Text(
                     text = "Digitaler Urlaubsantrag",
                     color = MaterialTheme.colorScheme.primary,
-                    fontSize = 24.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier.padding(top = 4.dp)
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 Image(
                     painter = painterResource(id = R.drawable.splash_image),
                     contentDescription = "Splash Logo",
-                    modifier = Modifier.size(280.dp)
+                    modifier = Modifier.size(220.dp)
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
                     text = "Dein Urlaub.",
                     color = MaterialTheme.colorScheme.onBackground,
-                    fontSize = 28.sp,
+                    fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = "Einfach beantragt.",
                     color = MaterialTheme.colorScheme.primary,
-                    fontSize = 28.sp,
+                    fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = "In nur 3 Schritten zum Urlaubsantrag",
                     color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
-                    fontSize = 16.sp,
-                    modifier = Modifier.padding(top = 16.dp)
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(top = 8.dp)
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
@@ -184,20 +174,14 @@ fun SplashScreen(
                     shape = RoundedCornerShape(30.dp),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(60.dp)
+                        .height(54.dp)
                 ) {
                     Text(
                         text = "Urlaub beantragen",
                         color = MaterialTheme.colorScheme.onPrimary,
-                        fontSize = 20.sp,
+                        fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )
-                }
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                TextButton(onClick = onHelpClick) {
-                    Text("📖 Hilfe & Bedienungsanleitung", color = MaterialTheme.colorScheme.primary, fontSize = 15.sp)
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -205,7 +189,7 @@ fun SplashScreen(
                 Text(
                     text = "Schnell • Einfach • Digital",
                     color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f),
-                    fontSize = 14.sp
+                    fontSize = 13.sp
                 )
             }
         }

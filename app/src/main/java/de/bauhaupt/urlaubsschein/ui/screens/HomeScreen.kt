@@ -71,6 +71,14 @@ fun HomeScreen(
         )
     }
 
+    val systemBars = WindowInsets.systemBars.asPaddingValues()
+    val contentPad = PaddingValues(
+        top = systemBars.calculateTopPadding() + 24.dp,
+        bottom = systemBars.calculateBottomPadding() + 96.dp,
+        start = 16.dp,
+        end = 16.dp
+    )
+
     GridBackground {
         Box(modifier = Modifier.fillMaxSize()) {
             if (isLandscape) {
@@ -78,8 +86,8 @@ fun HomeScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .windowInsetsPadding(WindowInsets.safeDrawing)
-                        .padding(16.dp)
+                        .padding(contentPad),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     // Header
                     Row(
@@ -96,7 +104,7 @@ fun HomeScreen(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
                     Row(
                         modifier = Modifier
@@ -162,10 +170,8 @@ fun HomeScreen(
             } else {
                 // --- HOCHFORMAT ---
                 LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .windowInsetsPadding(WindowInsets.safeDrawing)
-                        .padding(16.dp),
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = contentPad,
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     item {
@@ -202,7 +208,7 @@ fun HomeScreen(
                     }
 
                     item {
-                        Text("Meine Anträge & PDFs", color = MaterialTheme.colorScheme.onBackground, fontSize = 20.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 16.dp))
+                        Text("Meine Anträge & PDFs", color = MaterialTheme.colorScheme.onBackground, fontSize = 20.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 8.dp))
                     }
 
                     if (antraege.isEmpty()) {
@@ -228,8 +234,6 @@ fun HomeScreen(
                             )
                         }
                     }
-
-                    item { Spacer(modifier = Modifier.height(80.dp)) }
                 }
             }
         }
@@ -267,6 +271,33 @@ fun AntragWithPdfCard(
         "STORNIERT" -> Color.Red
         "EINGEREICHT" -> StatusAmber
         else -> MaterialTheme.colorScheme.outline
+    }
+
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            title = { Text("Antrag löschen", color = MaterialTheme.colorScheme.onSurface) },
+            text = { Text("Möchtest du diesen Antrag wirklich unwiderruflich löschen?", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)) },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showDeleteDialog = false
+                        onDelete()
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+                ) {
+                    Text("Löschen", color = Color.White)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteDialog = false }) {
+                    Text("Abbrechen", color = MaterialTheme.colorScheme.primary)
+                }
+            },
+            containerColor = MaterialTheme.colorScheme.surface
+        )
     }
 
     Card(
@@ -337,7 +368,7 @@ fun AntragWithPdfCard(
                         }
                     }
                     OutlinedButton(
-                        onClick = onDelete,
+                        onClick = { showDeleteDialog = true },
                         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFFFF5252)),
                         border = BorderStroke(1.dp, Color(0xFFFF5252)),
                         shape = RoundedCornerShape(8.dp),

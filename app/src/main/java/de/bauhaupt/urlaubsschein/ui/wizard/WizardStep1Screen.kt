@@ -52,8 +52,7 @@ fun WizardStep1Screen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .windowInsetsPadding(WindowInsets.safeDrawing)
-                .padding(16.dp)
+                .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -81,194 +80,220 @@ fun WizardStep1Screen(
                 strokeCap = StrokeCap.Round
             )
 
-            Text("URLAUBSART WÄHLEN", color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f), fontSize = 12.sp, fontWeight = FontWeight.Bold)
-
-            if (isLandscape) {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                    UrlaubsArtButton(
-                        text = "Tarifurlaub (BRTV Bau)",
-                        isSelected = state.urlaubsArt == "Tarifurlaub",
-                        onClick = { viewModel.setUrlaubsArt("Tarifurlaub") },
-                        modifier = Modifier.weight(1f)
-                    )
-                    UrlaubsArtButton(
-                        text = "Sonderurlaub",
-                        isSelected = state.urlaubsArt == "Sonderurlaub",
-                        onClick = { viewModel.setUrlaubsArt("Sonderurlaub") },
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-            } else {
-                UrlaubsArtButton(
-                    text = "Tarifurlaub (BRTV Bau)",
-                    isSelected = state.urlaubsArt == "Tarifurlaub",
-                    onClick = { viewModel.setUrlaubsArt("Tarifurlaub") }
-                )
-                UrlaubsArtButton(
-                    text = "Sonderurlaub",
-                    isSelected = state.urlaubsArt == "Sonderurlaub",
-                    onClick = { viewModel.setUrlaubsArt("Sonderurlaub") }
-                )
-            }
-
-            // Dropdown + Info-Button + Zeitraum bei Sonderurlaub
-            if (state.urlaubsArt == "Sonderurlaub") {
-                Text("GRUND FÜR SONDERURLAUB", color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f), fontSize = 12.sp, fontWeight = FontWeight.Bold)
-
-                Box {
-                    OutlinedButton(
-                        onClick = { dropdownExpanded = true },
-                        modifier = Modifier.fillMaxWidth().height(56.dp),
-                        shape = RoundedCornerShape(12.dp),
-                        border = BorderStroke(1.dp, if (state.sonderurlaubGrund.isNotBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline)
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = if (state.sonderurlaubGrund.isNotBlank()) state.sonderurlaubGrund else "Grund auswählen...",
-                                color = if (state.sonderurlaubGrund.isNotBlank()) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                                fontSize = 14.sp
-                            )
-                            Text("▼", color = MaterialTheme.colorScheme.primary, fontSize = 12.sp)
-                        }
-                    }
-
-                    DropdownMenu(
-                        expanded = dropdownExpanded,
-                        onDismissRequest = { dropdownExpanded = false },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.surface)
-                    ) {
-                        SonderurlaubGründe.alle().forEach { grund ->
-                            DropdownMenuItem(
-                                text = { Text(text = grund, color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp) },
-                                onClick = {
-                                    viewModel.setSonderurlaubGrund(grund)
-                                    dropdownExpanded = false
-                                },
-                                modifier = Modifier.background(MaterialTheme.colorScheme.surface)
-                            )
-                        }
-                    }
-                }
-
-                if (state.sonderurlaubGrund == SonderurlaubGründe.EIGENER) {
-                    OutlinedTextField(
-                        value = state.sonderurlaubGrund,
-                        onValueChange = { viewModel.setSonderurlaubGrund(it) },
-                        label = { Text("Bitte Grund eingeben") },
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = MaterialTheme.colorScheme.primary,
-                            unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                            focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                            focusedContainerColor = MaterialTheme.colorScheme.surface,
-                            unfocusedContainerColor = MaterialTheme.colorScheme.surface
-                        ),
-                        shape = RoundedCornerShape(12.dp)
-                    )
-                }
-
-                TextButton(
-                    onClick = { showInfoDialog = true },
-                    modifier = Modifier.align(Alignment.End)
-                ) {
-                    Text("ℹ Informationen zu Sonderurlaub", color = MaterialTheme.colorScheme.primary, fontSize = 12.sp)
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-                Text("ZEITRAUM FÜR SONDERURLAUB", color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f), fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text("VON (erster Urlaubstag)", color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f), fontSize = 10.sp)
-                        DateCard(date = state.vonDatum.format(dateFormatter)) {
-                            activeDatePicker = Triple(0, true, state.vonDatum)
-                        }
-                    }
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text("BIS (letzter Urlaubstag)", color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f), fontSize = 10.sp)
-                        DateCard(date = state.bisDatum.format(dateFormatter)) {
-                            activeDatePicker = Triple(0, false, state.bisDatum)
-                        }
-                    }
-                }
-            } else {
-                // Tarifurlaub: Bis zu 3 Zeiträume
-                Text("ZEITRÄUME (Bis zu 3 Zeiträume für Tarifurlaub)", color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f), fontSize = 12.sp, fontWeight = FontWeight.Bold)
-
-                state.urlaubsPerioden.forEachIndexed { index, periode ->
-                    Card(
-                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                        shape = RoundedCornerShape(12.dp),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text("Zeitraum ${index + 1} (${periode.tage} AT)", color = MaterialTheme.colorScheme.primary, fontSize = 13.sp, fontWeight = FontWeight.Bold)
-                                if (state.urlaubsPerioden.size > 1) {
-                                    TextButton(onClick = { viewModel.removeUrlaubsperiode(index) }) {
-                                        Text("Entfernen", color = Color(0xFFFF5252), fontSize = 12.sp)
-                                    }
-                                }
-                            }
-                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                Column(modifier = Modifier.weight(1f)) {
-                                    Text("VON (erster Urlaubstag)", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f), fontSize = 10.sp)
-                                    DateCard(date = periode.von.format(dateFormatter)) {
-                                        activeDatePicker = Triple(index, true, periode.von)
-                                    }
-                                }
-                                Column(modifier = Modifier.weight(1f)) {
-                                    Text("BIS (letzter Urlaubstag)", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f), fontSize = 10.sp)
-                                    DateCard(date = periode.bis.format(dateFormatter)) {
-                                        activeDatePicker = Triple(index, false, periode.bis)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (state.urlaubsPerioden.size < 3) {
-                    OutlinedButton(
-                        onClick = { viewModel.addUrlaubsperiode() },
-                        modifier = Modifier.fillMaxWidth().height(50.dp),
-                        shape = RoundedCornerShape(12.dp),
-                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
-                    ) {
-                        Text("+ Weiteren Zeitraum hinzufügen (${state.urlaubsPerioden.size}/3)", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
-                    }
-                }
-            }
-
+            // --- URLAUBSART AUSWAHL ---
             Card(
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = "Gesamte Urlaubstage: ${state.berechneteTage} AT",
-                        color = MaterialTheme.colorScheme.primary,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "Nächster Arbeitstag (Rückkehr): ${state.rueckkehrDatum.format(rueckkehrFormatter)}",
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontSize = 14.sp
-                    )
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Text("URLAUBSART WÄHLEN", color = MaterialTheme.colorScheme.primary, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Button(
+                            onClick = { viewModel.setUrlaubsArt("Tarifurlaub") },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (state.urlaubsArt == "Tarifurlaub") MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant
+                            ),
+                            shape = RoundedCornerShape(12.dp),
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(
+                                "Tarifurlaub",
+                                color = if (state.urlaubsArt == "Tarifurlaub") MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+
+                        Button(
+                            onClick = { viewModel.setUrlaubsArt("Sonderurlaub") },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (state.urlaubsArt == "Sonderurlaub") MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant
+                            ),
+                            shape = RoundedCornerShape(12.dp),
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(
+                                "Sonderurlaub",
+                                color = if (state.urlaubsArt == "Sonderurlaub") MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
+
+                    if (state.urlaubsArt == "Sonderurlaub") {
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text("Grund für Sonderurlaub:", color = MaterialTheme.colorScheme.onSurface, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                        Box {
+                            OutlinedButton(
+                                onClick = { dropdownExpanded = true },
+                                modifier = Modifier.fillMaxWidth().height(50.dp),
+                                shape = RoundedCornerShape(12.dp),
+                                border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = state.sonderurlaubGrund.ifBlank { "Bitte Grund wählen..." },
+                                        color = if (state.sonderurlaubGrund.isBlank()) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f) else MaterialTheme.colorScheme.onSurface,
+                                        fontSize = 14.sp
+                                    )
+                                    Text("▼", color = MaterialTheme.colorScheme.primary, fontSize = 12.sp)
+                                }
+                            }
+
+                            DropdownMenu(
+                                expanded = dropdownExpanded,
+                                onDismissRequest = { dropdownExpanded = false },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(MaterialTheme.colorScheme.surface)
+                            ) {
+                                SonderurlaubGründe.alle().forEach { grund ->
+                                    DropdownMenuItem(
+                                        text = { Text(text = grund, color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp) },
+                                        onClick = {
+                                            viewModel.setSonderurlaubGrund(grund)
+                                            dropdownExpanded = false
+                                        },
+                                        modifier = Modifier.background(MaterialTheme.colorScheme.surface)
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // --- ZEITRÄUME (BIS ZU 3) ---
+            Card(
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("URLAUBSZEITRÄUME", color = MaterialTheme.colorScheme.primary, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                        Text("${state.urlaubsPerioden.size} / 3", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f), fontSize = 12.sp)
+                    }
+
+                    state.urlaubsPerioden.forEachIndexed { index, periode ->
+                        Card(
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
+                            shape = RoundedCornerShape(12.dp),
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(12.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text("Zeitraum ${index + 1}", color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                                    if (state.urlaubsPerioden.size > 1) {
+                                        TextButton(onClick = { viewModel.removeUrlaubsperiode(index) }) {
+                                            Text("Entfernen", color = Color.Red, fontSize = 12.sp)
+                                        }
+                                    }
+                                }
+
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    OutlinedButton(
+                                        onClick = { activeDatePicker = Triple(index, true, periode.von) },
+                                        modifier = Modifier.weight(1f),
+                                        shape = RoundedCornerShape(10.dp),
+                                        contentPadding = PaddingValues(vertical = 10.dp, horizontal = 8.dp)
+                                    ) {
+                                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                            Text("Von", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f))
+                                            Text(periode.von.format(dateFormatter), fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Bold)
+                                        }
+                                    }
+
+                                    OutlinedButton(
+                                        onClick = { activeDatePicker = Triple(index, false, periode.bis) },
+                                        modifier = Modifier.weight(1f),
+                                        shape = RoundedCornerShape(10.dp),
+                                        contentPadding = PaddingValues(vertical = 10.dp, horizontal = 8.dp)
+                                    ) {
+                                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                            Text("Bis", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f))
+                                            Text(periode.bis.format(dateFormatter), fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Bold)
+                                        }
+                                    }
+                                }
+
+                                Text(
+                                    text = "Dauer: ${periode.tage} Arbeitstage",
+                                    color = MaterialTheme.colorScheme.primary,
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+                    }
+
+                    if (state.urlaubsPerioden.size < 3) {
+                        OutlinedButton(
+                            onClick = { viewModel.addUrlaubsperiode() },
+                            modifier = Modifier.fillMaxWidth().height(44.dp),
+                            shape = RoundedCornerShape(12.dp),
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
+                        ) {
+                            Text("+ Weiteren Zeitraum hinzufügen (Splitten)", color = MaterialTheme.colorScheme.primary, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                        }
+                    }
+                }
+            }
+
+            // --- BERECHNUNG & RÜCKKEHR ---
+            Card(
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text("URLAUBSANSPRUCH & RÜCKKEHR", color = MaterialTheme.colorScheme.primary, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                        Text("Gesamt Urlaubstage:", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f), fontSize = 14.sp)
+                        Text("${state.berechneteTage} Arbeitstage", color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                    }
+
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                        Text("Erster Arbeitstag nach Urlaub:", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f), fontSize = 14.sp)
+                        Text(state.rueckkehrDatum.format(rueckkehrFormatter), color = StatusGreen, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                    }
+
+                    TextButton(onClick = { showInfoDialog = true }) {
+                        Text("ℹ️ Wie werden Feiertage & Samstage berechnet?", color = MaterialTheme.colorScheme.primary, fontSize = 12.sp)
+                    }
                 }
             }
 
@@ -278,187 +303,50 @@ fun WizardStep1Screen(
                 shape = RoundedCornerShape(30.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(60.dp)
+                    .height(56.dp)
             ) {
-                Text("Weiter zu Details ➔", color = MaterialTheme.colorScheme.onPrimary, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                Text("Weiter zu Details ➔", color = MaterialTheme.colorScheme.onPrimary, fontSize = 16.sp, fontWeight = FontWeight.Bold)
             }
 
-            // Ausreichend Abstand am unteren Rand, damit Buttons nicht abgeschnitten werden
-            Spacer(modifier = Modifier.height(100.dp))
+            Spacer(modifier = Modifier.height(24.dp))
         }
     }
 
-    // Active Date Picker Dialog
-    activeDatePicker?.let { (index, isVon, currentDate) ->
-        val periode = if (state.urlaubsArt == "Sonderurlaub") {
-            null
-        } else {
-            state.urlaubsPerioden.getOrNull(index)
-        }
-        val startD = periode?.von ?: state.vonDatum
-        val endD = periode?.bis ?: state.bisDatum
+    if (showPrivacyDialog) {
+        PrivacyDialog(onDismiss = { showPrivacyDialog = false })
+    }
 
+    if (showInfoDialog) {
+        AlertDialog(
+            onDismissRequest = { showInfoDialog = false },
+            title = { Text("Berechnungshinweis", color = MaterialTheme.colorScheme.onSurface) },
+            text = {
+                Text(
+                    "Gemäß BRTV-Bau werden Arbeitstage von Montag bis Freitag gezählt. Gesetzliche Feiertage des gewählten Bundeslandes sowie Samstage und Sonntage werden automatisch als arbeitsfrei berücksichtigt.",
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                )
+            },
+            confirmButton = {
+                Button(onClick = { showInfoDialog = false }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)) {
+                    Text("Verstanden", color = MaterialTheme.colorScheme.onPrimary)
+                }
+            },
+            containerColor = MaterialTheme.colorScheme.surface
+        )
+    }
+
+    activeDatePicker?.let { (index, isVon, currentDate) ->
         CustomDatePickerDialog(
             initialDate = currentDate,
-            startDate = startD,
-            endDate = endD,
-            onDateSelected = { date ->
-                if (state.urlaubsArt == "Sonderurlaub") {
-                    if (isVon) {
-                        viewModel.setVonDatum(date)
-                    } else {
-                        viewModel.setBisDatum(date)
-                    }
+            onDateSelected = { selectedDate ->
+                if (isVon) {
+                    viewModel.updateUrlaubsperiodeVon(index, selectedDate)
                 } else {
-                    if (isVon) {
-                        viewModel.updateUrlaubsperiodeVon(index, date)
-                    } else {
-                        viewModel.updateUrlaubsperiodeBis(index, date)
-                    }
+                    viewModel.updateUrlaubsperiodeBis(index, selectedDate)
                 }
                 activeDatePicker = null
             },
             onDismiss = { activeDatePicker = null }
         )
-    }
-
-    // Info-Dialog
-    if (showInfoDialog) {
-        AlertDialog(
-            onDismissRequest = { showInfoDialog = false },
-            title = {
-                Text(
-                    "Sonderurlaub im Bauhauptgewerbe",
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
-                )
-            },
-            text = {
-                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                    Text("§ 4 BRTV-Bau / RTV-Angestellte", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Text("Mögliche Gründe und Anzahl der Tage:", color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text("• Eigene Eheschließung: 3 Tage", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f), fontSize = 13.sp)
-                    Text("• Geburt des Kindes: 2 Tage", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f), fontSize = 13.sp)
-                    Text("• Tod naher Angehöriger: 2 Tage", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f), fontSize = 13.sp)
-                    Text("• Wohnungswechsel (1x/Jahr): 2 Tage", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f), fontSize = 13.sp)
-                    Text("• Erkrankung Familienmitglied: 1 Tag", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f), fontSize = 13.sp)
-                    Text("• Arztbesuche/Behördengänge: tatsächliche Zeit", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f), fontSize = 13.sp)
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Button(
-                        onClick = { showDetailsDialog = true },
-                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text("Detaillierte Informationen", color = MaterialTheme.colorScheme.onPrimary, fontSize = 14.sp)
-                    }
-                }
-            },
-            confirmButton = {
-                TextButton(onClick = { showInfoDialog = false }) {
-                    Text("Schließen", color = MaterialTheme.colorScheme.primary, fontSize = 14.sp)
-                }
-            },
-            containerColor = MaterialTheme.colorScheme.surface,
-            shape = RoundedCornerShape(12.dp)
-        )
-    }
-
-    // Details-Dialog
-    if (showDetailsDialog) {
-        AlertDialog(
-            onDismissRequest = { showDetailsDialog = false },
-            title = {
-                Text(
-                    "Detaillierte Regelungen",
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
-                )
-            },
-            text = {
-                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                    Text("Wichtige Zusatzregeln:", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold, fontSize = 13.sp)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        "• Ehrenämter und öffentliche Pflichten: Für die Wahrnehmung von gesetzlich auferlegten Pflichten (z. B. Vorladungen als Zeuge vor Gericht, Ausübung von öffentlichen Ehrenämtern) besteht ebenfalls ein Anspruch auf Freistellung.\n\n" +
-                                "• Keine betrieblichen Gründe: Der Sonderurlaub aus familiären Gründen wird gewährt, sofern dem keine schwerwiegenden betrieblichen Gründe entgegenstehen.\n\n" +
-                                "• Attestpflicht: Bei Erkrankung von im gemeinsamen Haushalt lebenden Familienmitgliedern ist ein ärztliches Attest vorzulegen.",
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                        fontSize = 12.sp
-                    )
-                }
-            },
-            confirmButton = {
-                TextButton(onClick = { showDetailsDialog = false }) {
-                    Text("Zurück", color = MaterialTheme.colorScheme.primary, fontSize = 14.sp)
-                }
-            },
-            containerColor = MaterialTheme.colorScheme.surface,
-            shape = RoundedCornerShape(12.dp)
-        )
-    }
-
-    // Ausführlicher Datenschutzhinweis-Dialog
-    if (showPrivacyDialog) {
-        PrivacyDialog(onDismiss = { showPrivacyDialog = false })
-    }
-}
-
-@Composable
-fun UrlaubsArtButton(
-    text: String,
-    isSelected: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(60.dp)
-            .background(
-                color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
-                shape = RoundedCornerShape(12.dp)
-            )
-            .border(
-                width = 1.dp,
-                color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
-                shape = RoundedCornerShape(12.dp)
-            )
-            .clickable { onClick() }
-            .padding(horizontal = 16.dp),
-        contentAlignment = Alignment.CenterStart
-    ) {
-        Text(
-            text = text,
-            color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold
-        )
-    }
-}
-
-@Composable
-fun DateCard(date: String, onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(60.dp)
-            .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(12.dp))
-            .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(12.dp))
-            .clickable { onClick() }
-            .padding(16.dp),
-        contentAlignment = Alignment.CenterStart
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(text = date, color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp, fontWeight = FontWeight.Bold)
-            Text("📅", fontSize = 16.sp)
-        }
     }
 }

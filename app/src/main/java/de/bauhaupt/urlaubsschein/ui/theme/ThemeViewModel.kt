@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class ThemeViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = ThemeRepository(application)
+    val repository = ThemeRepository(application)
 
     val isDarkMode: StateFlow<Boolean?> = repository.isDarkMode
         .stateIn(
@@ -19,7 +19,7 @@ class ThemeViewModel(application: Application) : AndroidViewModel(application) {
             initialValue = null
         )
 
-    fun setDarkMode(enabled: Boolean) {
+    fun setDarkMode(enabled: Boolean?) {
         viewModelScope.launch {
             repository.setDarkMode(enabled)
         }

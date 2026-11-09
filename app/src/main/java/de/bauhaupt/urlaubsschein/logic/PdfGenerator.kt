@@ -380,15 +380,18 @@ object PdfGenerator {
         val securePrefs = SecurePreferences(context)
         val sigScale = securePrefs.signatureScale
 
-        var targetWidth = cellWidth * sigScale
+        val maxCellW = cellWidth * 0.6f
+        val maxCellH = cellHeight * 0.4f
+
+        var targetWidth = maxCellW * sigScale
         var targetHeight = targetWidth / aspectRatio
-        if (targetHeight > cellHeight * sigScale) {
-            targetHeight = cellHeight * sigScale
+        if (targetHeight > maxCellH * sigScale) {
+            targetHeight = maxCellH * sigScale
             targetWidth = targetHeight * aspectRatio
         }
 
-        val left = cellStartX + (cellWidth - targetWidth) / 2
-        val top = schreibLinieY - (targetHeight * schreibLinieYNorm) - (targetHeight * 0.18f)
+        val left = cellStartX + (cellWidth - targetWidth) / 2f
+        val top = schreibLinieY - targetHeight - ((schreibLinieYNorm - 1.0f) * targetHeight) - 8f
         val destRect = RectF(left, top, left + targetWidth, top + targetHeight)
 
         val paint = Paint().apply {

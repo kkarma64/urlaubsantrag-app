@@ -38,7 +38,7 @@ class SecurePreferences(context: Context) {
         set(value) = sharedPreferences.edit().putString("key_signature_path", value).apply()
 
     var signatureNormY: Float
-        get() = sharedPreferences.getFloat("key_signature_norm_y", 0.71875f)
+        get() = sharedPreferences.getFloat("key_signature_norm_y", 1.0f)
         set(value) = sharedPreferences.edit().putFloat("key_signature_norm_y", value).apply()
 
     var signatureScale: Float
@@ -64,4 +64,12 @@ class SecurePreferences(context: Context) {
     var standardPolier: String
         get() = sharedPreferences.getString("key_std_polier", "Heiko Schneider") ?: "Heiko Schneider"
         set(value) = sharedPreferences.edit().putString("key_std_polier", value).apply()
+
+    var standardPolierEmail: String
+        get() = sharedPreferences.getString("key_std_polier_email", "polier@nameunternehmen.de") ?: "polier@nameunternehmen.de"
+        set(value) = sharedPreferences.edit().putString("key_std_polier_email", value).apply()
+
+    var useBiometrics: Boolean
+        get() = sharedPreferences.getBoolean("key_use_biometrics", false)
+        set(value) = sharedPreferences.edit().putBoolean("key_use_biometrics", value).apply()
 }

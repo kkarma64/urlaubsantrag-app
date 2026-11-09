@@ -22,13 +22,12 @@ fun HelpScreen(onBack: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .windowInsetsPadding(WindowInsets.safeDrawing)
-                .padding(16.dp)
+                .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -74,10 +73,10 @@ fun HelpScreen(onBack: () -> Unit) {
 
             HelpCard(
                 title = "5. Sicherheit, Backup & Datenschutz",
-                content = "Deine Daten und dein PIN-Passwort werden verschlüsselt und zu 100% lokal auf deinem Gerät gespeichert. Die App verfügt über einen konfigurierbaren Auto-Lock-Timeout (Sofort, 15s, 60s, 5 Min.) sowie eine Backup-Funktion zum Sichern und Wiederherstellen deiner Daten als JSON."
+                content = "Deine Daten und dein PIN-Passwort werden verschlüsselt und zu 100% lokal auf deinem Gerät gespeichert. Die App verfügt über einen konfigurierbaren Auto-Lock-Timeout (Sofort, 15s, 60s, 5 Min., Unendlich) sowie eine Backup-Funktion zum Sichern und Wiederherstellen deiner Daten als JSON."
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

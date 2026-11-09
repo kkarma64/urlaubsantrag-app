@@ -2,57 +2,42 @@ package de.bauhaupt.urlaubsschein.ui.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun GridBackground(
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    content: @Composable BoxScope.() -> Unit
 ) {
-    val backgroundColor = MaterialTheme.colorScheme.background
-    val isDark = backgroundColor.red < 0.5f
-    val gridColor = if (isDark) Color(0xFF272B35) else Color(0xFFE2E6ED)
-
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
-            .background(backgroundColor)
+            .background(MaterialTheme.colorScheme.background)
     ) {
+        // Das Raster im Hintergrund
         Canvas(modifier = Modifier.fillMaxSize()) {
-            val gridSpacing = 90f
-            val strokeWidth = 1.5f
-            val color = gridColor
+            val gridSpacing = 40.dp.toPx()
+            val lineColor = Color.Gray.copy(alpha = 0.1f)
 
-            // Vertikale Linien
-            var x = gridSpacing
+            var x = 0f
             while (x < size.width) {
-                drawLine(
-                    color = color,
-                    start = Offset(x, 0f),
-                    end = Offset(x, size.height),
-                    strokeWidth = strokeWidth
-                )
+                drawLine(color = lineColor, start = Offset(x, 0f), end = Offset(x, size.height), strokeWidth = 1f)
                 x += gridSpacing
             }
 
-            // Horizontale Linien
-            var y = gridSpacing
+            var y = 0f
             while (y < size.height) {
-                drawLine(
-                    color = color,
-                    start = Offset(0f, y),
-                    end = Offset(size.width, y),
-                    strokeWidth = strokeWidth
-                )
+                drawLine(color = lineColor, start = Offset(0f, y), end = Offset(size.width, y), strokeWidth = 1f)
                 y += gridSpacing
             }
         }
+
+        // Der Inhalt, ohne künstliche Abstände
         content()
     }
 }
